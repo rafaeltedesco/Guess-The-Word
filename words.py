@@ -2,7 +2,7 @@ import random
 
 class WordGenerator():
   def __init__(self):
-    self.__dict_words = {'countries': ['Argentina', 'Alemanha', 'Venezuela', 'Colombia', 'Espanha', 'Italia'],
+    self.__dict_words = {'country': ['Argentina', 'Alemanha', 'Venezuela', 'Colombia', 'Espanha', 'Italia'],
 'food': ['Pizza', 'Lasanha', 'Brigadeiro', 'Feijoada', 'Nhoque', '']}
   
   def get_theme(self):

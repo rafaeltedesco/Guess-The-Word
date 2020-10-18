@@ -32,7 +32,7 @@ class Game():
 
 
   def __check_guess(self, letter):
-    while len(letter) > 1 :
+    while len(letter) > 1 or not letter:
       print('Invalid character.')
       letter = input('Please type a letter again:\n')
       return letter

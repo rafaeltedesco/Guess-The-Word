@@ -15,6 +15,7 @@ class Game():
     print(f'The subject is {self.theme}')
     for l in self.word:
       print(f'{l}', end=' ')
+    print(f'\nThe secret word has {len(self.secret_word)} letters!')
     if self.tried_letters:
       print('\nYou\'ve already tried letter(s)')
       if len(self.tried_letters) > 1:

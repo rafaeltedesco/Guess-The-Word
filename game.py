@@ -8,6 +8,7 @@ class Game():
     self.mistakes = []
     self.tries = 4
     self.tried_letters = []
+    self.guess = False
 
   def draw(self):
     time.sleep(0.1)
@@ -33,9 +34,12 @@ class Game():
 
   def __check_guess(self, letter):
     while len(letter) > 1 or not letter:
-      print('Invalid character.')
-      letter = input('Please type a letter again:\n')
-      return letter
+      if letter == 'guess':
+        break
+      else:
+        print('Invalid character.')
+        letter = input('Please type a letter again:\n')
+        return letter
     return letter
   
   def __compare(self, letter):
@@ -51,20 +55,39 @@ class Game():
       time.sleep(1.5)
 
   def get_guess(self):
-    letter = self.__check_guess(input('\nType a letter:\n'))
-    if letter in self.tried_letters:
-      print(f'Letter {letter} was already typed')
-      time.sleep(1.5)
+    letter = self.__check_guess(input('\nType a letter or type \'guess\' if you think you already know the entire word and want to try to guess:\n'))
+
+    if letter == 'guess':
+      self.try_guess()
     else:
-      self.tried_letters.append(letter)
-      self.__compare(letter)
+
+      if letter in self.tried_letters:
+        print(f'Letter {letter} was already typed')
+        time.sleep(1.5)
+      else:
+        self.tried_letters.append(letter)
+        self.__compare(letter)
+
+  def try_guess(self):
+    self.draw()
+    guessed_word = input('All right! Try to guess. Type the entire word. Be careful. You have only one chance:\n')
+    if guessed_word == self.secret_word:
+      self.guess = True
+    else:
+      self.guess = False
+      self.tries = 0
     
   def play(self):
-    while len(self.mistakes) < self.tries and '_' in self.word:
+    while (len(self.mistakes) < self.tries and '_' in self.word) and not self.guess:
       self.draw()
       self.get_guess()
+  
+    if self.guess:
+      for idx, w in enumerate(self.secret_word):
+        self.word[idx] = self.secret_word[idx]
     
     self.draw()
+
     if not '_' in self.word:
       os.system('clear')
       print('Congratulations!!! You Win!!!')
